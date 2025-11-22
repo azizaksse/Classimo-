@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabaseClient";
+import { getSupabaseClient } from "@/lib/supabaseClient";
 
 type Product = {
   id: number | string;
@@ -10,6 +10,12 @@ type Product = {
 
 export default async function ProductGallery() {
   const fetchProducts = async () => {
+    const supabase = getSupabaseClient();
+
+    if (!supabase) {
+      return [];
+    }
+
     const query = supabase
       .from("products")
       .select("id, name, description, price, image_url")

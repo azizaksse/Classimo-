@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabaseAdminClient";
+import { getSupabaseAdmin } from "@/lib/supabaseAdminClient";
 import { revalidatePath } from "next/cache";
 
 type Product = {
@@ -20,6 +20,12 @@ const CATEGORY_OPTIONS = [
 ];
 
 async function getProducts(): Promise<{ data: Product[]; error?: string }> {
+  const supabaseAdmin = getSupabaseAdmin();
+
+  if (!supabaseAdmin) {
+    return { data: [], error: "Missing Supabase environment variables for admin client" };
+  }
+
   const { data, error } = await supabaseAdmin
     .from("products")
     .select("id, name, description, price, image_url, created_at, category")
@@ -46,6 +52,11 @@ export async function createProduct(formData: FormData) {
 
   if (!name.trim() || Number.isNaN(price)) {
     throw new Error("Name and price are required");
+  }
+
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    throw new Error("Missing Supabase environment variables for admin client");
   }
 
   let imageUrl: string | null = null;
@@ -92,6 +103,11 @@ export async function deleteProduct(formData: FormData) {
     throw new Error("Missing product id");
   }
 
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    throw new Error("Missing Supabase environment variables for admin client");
+  }
+
   const { error } = await supabaseAdmin.from("products").delete().eq("id", id);
 
   if (error) {
@@ -116,6 +132,11 @@ export async function updateProduct(formData: FormData) {
 
   if (!id || !name.trim() || Number.isNaN(price)) {
     throw new Error("Missing required fields");
+  }
+
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) {
+    throw new Error("Missing Supabase environment variables for admin client");
   }
 
   let updates: Partial<Product> = {

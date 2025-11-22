@@ -1,10 +1,18 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE;
+let cachedAdmin: SupabaseClient | null = null;
 
-if (!supabaseUrl || !supabaseServiceRoleKey) {
-  throw new Error("Missing Supabase environment variables for admin client");
-}
+export const getSupabaseAdmin = () => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE;
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
+  if (!supabaseUrl || !supabaseServiceRoleKey) {
+    return null;
+  }
+
+  if (!cachedAdmin) {
+    cachedAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
+  }
+
+  return cachedAdmin;
+};
