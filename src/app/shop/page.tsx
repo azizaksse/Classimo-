@@ -25,7 +25,7 @@ type CartItem = {
   quantity: number;
 };
 
-const sortOptions = ["?????? ??????", "??????", "????? ??????", "????? ??????"];
+const sortOptions = ["الأحدث", "الأقدم", "السعر الأقل", "السعر الأعلى"];
 
 const fallbackGradients = [
   "linear-gradient(135deg, #0e111b, #2a2e3f)",
@@ -53,7 +53,7 @@ function normalizeFallback(): ShopProduct[] {
     priceValue: parsePrice(item.price),
     image_url: undefined,
     category: item.category || "أخرى",
-    tag: item.tag,
+    tag: item.tag || "متاح",
     gradient: item.gradient || fallbackGradients[idx % fallbackGradients.length],
   }));
 }
@@ -61,7 +61,7 @@ function normalizeFallback(): ShopProduct[] {
 export default function ShopPage() {
   const [products, setProducts] = useState<ShopProduct[]>(() => normalizeFallback());
   const [selectedCategory, setSelectedCategory] = useState("الكل");
-  const [sortBy, setSortBy] = useState("?????? ??????");
+  const [sortBy, setSortBy] = useState("الأحدث");
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -116,9 +116,9 @@ export default function ShopPage() {
       return product.category === selectedCategory;
     });
     switch (sortBy) {
-      case "????? ??????":
+      case "السعر الأقل":
         return [...base].sort((a, b) => a.priceValue - b.priceValue);
-      case "????? ??????":
+      case "السعر الأعلى":
         return [...base].sort((a, b) => b.priceValue - a.priceValue);
       default:
         return base;
@@ -153,15 +153,15 @@ export default function ShopPage() {
   return (
     <div className="space-y-12">
       <SectionHeader
-        eyebrow="Shop"
-        title="???? ?????"
-        description="??????? ?????? ?????????? ???? ???? ????? ????? ??? ???????? ?? ????? ????."
+        eyebrow="المتجر"
+        title="متجر البيع"
+        description="تسوق مجموعات الأزياء المميزة واختر ما يناسب حفلك بثوانٍ وبحسب ميزانيتك."
       />
 
       <div className="glass-panel rounded-[32px] p-6">
         <div className="grid gap-4 md:grid-cols-3">
           <div>
-            <p className="text-xs uppercase tracking-[0.3em]">???????</p>
+            <p className="text-xs uppercase tracking-[0.3em]">التصنيف</p>
             <select
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white"
               value={selectedCategory}
@@ -173,7 +173,7 @@ export default function ShopPage() {
             </select>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.3em]">???????</p>
+            <p className="text-xs uppercase tracking-[0.3em]">الترتيب</p>
             <select
               className="mt-2 w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white"
               value={sortBy}
@@ -185,13 +185,12 @@ export default function ShopPage() {
             </select>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.3em]">?????</p>
-            <Input placeholder="?? 20,000 ??? 60,000 ??" />
+            <p className="text-xs uppercase tracking-[0.3em]">السعر</p>
+            <Input placeholder="مثال: من 20,000 إلى 60,000 دج" />
           </div>
         </div>
         <div className="mt-4 rounded-2xl border border-white/10 p-4 text-sm">
-          ????? ??? ???????? ???? ??????? ?? ?????? ??? ??????? ?????? ????? ??
-          ???? ????????.
+          اضبط الفلترة حسب السعر والمدة لتحصل على نتائج أدق بسرعة.
         </div>
       </div>
 
@@ -219,7 +218,7 @@ export default function ShopPage() {
               onClick={() => addToCart(product.id)}
               disabled={loading}
             >
-              ??? ??? ?????
+              أضف إلى السلة
             </Button>
           </motion.div>
         ))}
@@ -231,12 +230,12 @@ export default function ShopPage() {
       </div>
 
       <Sheet
-        title="??? ????? ???????"
+        title="مراجعة سلة التسوق"
         open={isCartOpen}
         onClose={() => setIsCartOpen(false)}
       >
         {cartItemsDetail.length === 0 ? (
-          <p className="text-sm">????? ????? ??????.</p>
+          <p className="text-sm">السلة فارغة.</p>
         ) : (
           <div className="space-y-4">
             {cartItemsDetail.map((item) => (
@@ -258,15 +257,15 @@ export default function ShopPage() {
               </div>
             ))}
             <div className="flex items-center justify-between rounded-2xl border border-white/10 p-4">
-              <p className="text-sm text-white">??????? ????????</p>
+              <p className="text-sm text-white">المجموع الكلي</p>
               <p className="text-xl font-semibold text-[#d4af37]">
                 {cartTotal.toLocaleString("fr-DZ")} DZD
               </p>
             </div>
             <div className="space-y-3">
-              <Button className="w-full">????? ????? (COD)</Button>
+              <Button className="w-full">تأكيد الطلب (COD)</Button>
               <Button variant="outline" className="w-full">
-                ????? ??? ??????
+                متابعة التسوق
               </Button>
             </div>
           </div>
