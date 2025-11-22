@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Facebook, Instagram, Music3, PhoneCall } from "lucide-react";
 
 const WHATSAPP_NUMBER = "213795443714";
+const WHATSAPP_BASE_URL = `https://api.whatsapp.com/send/?phone=${WHATSAPP_NUMBER}&text=`;
 
 const SOCIAL_LINKS = [
   {
     label: "WhatsApp",
-    href: `https://wa.me/${WHATSAPP_NUMBER}`,
+    href: `${WHATSAPP_BASE_URL}&type=phone_number&app_absent=0`,
     icon: PhoneCall,
   },
   {
@@ -35,7 +36,10 @@ const SOCIAL_LINKS = [
 export default function ContactPage() {
   const sendToWhatsApp = (message: string) => {
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, "_blank");
+    window.open(
+      `${WHATSAPP_BASE_URL}${encoded}&type=phone_number&app_absent=0`,
+      "_blank",
+    );
   };
 
   const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
