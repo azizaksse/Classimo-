@@ -156,6 +156,7 @@ export default function ShopPage() {
         eyebrow="المتجر"
         title="متجر البيع"
         description="تسوق مجموعات الأزياء المميزة واختر ما يناسب حفلك بثوانٍ وبحسب ميزانيتك."
+        lang="ar"
       />
 
       <div className="glass-panel rounded-[32px] p-6">

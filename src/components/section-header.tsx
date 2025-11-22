@@ -6,12 +6,14 @@ interface SectionHeaderProps {
   title: string;
   description?: string;
   align?: "left" | "center";
+  lang?: string;
 }
 export const SectionHeader = ({
   eyebrow,
   title,
   description,
   align = "left",
+  lang,
 }: SectionHeaderProps) => {
   return (
     <motion.div
@@ -23,6 +25,7 @@ export const SectionHeader = ({
         "mx-auto max-w-3xl space-y-3",
         align === "center" ? "text-center" : "text-left",
       )}
+      lang={lang}
     >
       {" "}
       {eyebrow ? (

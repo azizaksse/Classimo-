@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Cairo, Playfair_Display } from "next/font/google";
+import { Playfair_Display, Tajawal } from "next/font/google";
 import "./globals.css";
 import { RootLayoutClient } from "@/components/layout/root-layout";
 
 const displayFont = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-classimo-english",
+  variable: "--font-latin",
   display: "swap",
 });
 
-const arabicFont = Cairo({
+const arabicFont = Tajawal({
   subsets: ["arabic"],
-  weight: ["400", "600", "700"],
-  variable: "--font-classimo-arabic",
+  weight: ["400", "500", "700"],
+  variable: "--font-ar",
   display: "swap",
 });
 

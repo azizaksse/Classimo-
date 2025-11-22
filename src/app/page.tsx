@@ -201,7 +201,10 @@ export default function Home() {
             Testimonials
           </p>
           <div className="inline-block">
-            <h2 className="liquid-glass inline-flex items-center justify-center rounded-[24px] px-6 py-3 text-3xl font-semibold text-white">
+            <h2
+              className="liquid-glass inline-flex items-center justify-center rounded-[24px] px-6 py-3 text-3xl font-semibold text-white"
+              lang="ar"
+            >
               ???? ???? ????? ????? Classimo
             </h2>
           </div>
