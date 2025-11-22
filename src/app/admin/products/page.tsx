@@ -19,11 +19,18 @@ const CATEGORY_OPTIONS = [
   "أخرى",
 ];
 
-async function getProducts(): Promise<{ data: Product[]; error?: string }> {
+async function getProducts(): Promise<{
+  data: Product[];
+  error?: string;
+  warning?: string;
+}> {
   const supabaseAdmin = getSupabaseAdmin();
 
   if (!supabaseAdmin) {
-    return { data: [], error: "Missing Supabase environment variables for admin client" };
+    return {
+      data: [],
+      warning: "Supabase admin environment variables are not set. Add products after configuring env vars.",
+    };
   }
 
   const { data, error } = await supabaseAdmin
@@ -177,7 +184,7 @@ export async function updateProduct(formData: FormData) {
 }
 
 export default async function ProductsPage() {
-  const { data: products, error } = await getProducts();
+  const { data: products, error, warning } = await getProducts();
 
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -192,6 +199,11 @@ export default async function ProductsPage() {
         {error ? (
           <div className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-700 dark:bg-red-900/40 dark:text-red-200">
             Failed to load products: {error}
+          </div>
+        ) : null}
+        {!error && warning ? (
+          <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-600 dark:bg-amber-900/30 dark:text-amber-50">
+            {warning}
           </div>
         ) : null}
 

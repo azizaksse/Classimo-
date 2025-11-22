@@ -7,10 +7,8 @@ export async function GET() {
   const supabaseAdmin = getSupabaseAdmin();
 
   if (!supabaseAdmin) {
-    return NextResponse.json(
-      { error: "Missing Supabase environment variables" },
-      { status: 500 }
-    );
+    // Gracefully degrade if env vars are not present at runtime.
+    return NextResponse.json({ data: [] });
   }
 
   const { data, error } = await supabaseAdmin
