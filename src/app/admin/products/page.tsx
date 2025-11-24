@@ -8,7 +8,7 @@ type Product = {
   price: number;
   image_url: string | null;
   created_at: string;
-  category: string | null;
+  category?: string | null;
 };
 
 const CATEGORY_OPTIONS = [
@@ -18,6 +18,12 @@ const CATEGORY_OPTIONS = [
   "عطور",
   "أخرى",
 ];
+
+const isMissingCategoryColumn = (error?: { code?: string; message?: string } | null) =>
+  !!error &&
+  (error.code === "42703" ||
+    error.message?.toLowerCase().includes("category") ||
+    error.message?.toLowerCase().includes('column "category"'));
 
 async function getProducts(): Promise<{
   data: Product[];
@@ -38,6 +44,27 @@ async function getProducts(): Promise<{
     .select("id, name, description, price, image_url, created_at, category")
     .order("created_at", { ascending: false });
 
+  if (isMissingCategoryColumn(error)) {
+    const { data: fallbackData, error: fallbackError } = await supabaseAdmin
+      .from("products")
+      .select("id, name, description, price, image_url, created_at")
+      .order("created_at", { ascending: false });
+
+    if (fallbackError) {
+      return { data: [], error: fallbackError.message };
+    }
+
+    return {
+      data:
+        (fallbackData as Product[] | null)?.map((item) => ({
+          ...item,
+          category: null,
+        })) ?? [],
+      warning:
+        "Products loaded without categories because the 'category' column is missing in Supabase. Add it to enable category selection.",
+    };
+  }
+
   if (error) {
     return { data: [], error: error.message };
   }
@@ -52,8 +79,8 @@ export async function createProduct(formData: FormData) {
   const description = (formData.get("description") as string) ?? "";
   const priceValue = formData.get("price");
   const file = formData.get("image") as File | null;
-  const category =
-    ((formData.get("category") as string) ?? "أخرى").trim() || "أخرى";
+  const rawCategory = (formData.get("category") as string) ?? "";
+  const category = rawCategory.trim() || null;
 
   const price = Number(priceValue);
 
@@ -85,15 +112,30 @@ export async function createProduct(formData: FormData) {
     imageUrl = publicUrl;
   }
 
-  const { error: insertError } = await supabaseAdmin.from("products").insert({
+  const insertPayload = {
     name,
     description,
     price,
     image_url: imageUrl,
-    category,
-  });
+    ...(category ? { category } : {}),
+  };
 
-  if (insertError) {
+  const { error: insertError } = await supabaseAdmin.from("products").insert(insertPayload);
+
+  if (isMissingCategoryColumn(insertError)) {
+    const { error: fallbackInsertError } = await supabaseAdmin
+      .from("products")
+      .insert({
+        name,
+        description,
+        price,
+        image_url: imageUrl,
+      });
+
+    if (fallbackInsertError) {
+      throw fallbackInsertError;
+    }
+  } else if (insertError) {
     throw insertError;
   }
 
@@ -132,8 +174,8 @@ export async function updateProduct(formData: FormData) {
   const description = (formData.get("description") as string) ?? "";
   const priceValue = formData.get("price");
   const file = formData.get("image") as File | null;
-  const category =
-    ((formData.get("category") as string) ?? "أخرى").trim() || "أخرى";
+  const rawCategory = (formData.get("category") as string) ?? "";
+  const category = rawCategory.trim() || null;
 
   const price = Number(priceValue);
 
@@ -146,11 +188,11 @@ export async function updateProduct(formData: FormData) {
     throw new Error("Missing Supabase environment variables for admin client");
   }
 
-  let updates: Partial<Product> = {
+  let updates: Partial<Product> & { image_url?: string | null } = {
     name,
     description,
     price,
-    category,
+    ...(category ? { category } : {}),
   };
 
   if (file && typeof file !== "string" && file.size > 0) {
@@ -174,6 +216,22 @@ export async function updateProduct(formData: FormData) {
     .from("products")
     .update(updates)
     .eq("id", id);
+
+  if (isMissingCategoryColumn(error)) {
+    const { category: _omit, ...fallbackUpdates } = updates;
+    const { error: fallbackError } = await supabaseAdmin
+      .from("products")
+      .update(fallbackUpdates)
+      .eq("id", id);
+
+    if (fallbackError) {
+      throw fallbackError;
+    }
+
+    revalidatePath("/admin/products");
+    revalidatePath("/shop");
+    return;
+  }
 
   if (error) {
     throw error;
