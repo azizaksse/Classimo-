@@ -17,6 +17,7 @@ export async function GET() {
     return NextResponse.json({ data: [] });
   }
 
+
   const { data, error } = await supabaseAdmin
     .from("products")
     .select("id, name, description, price, image_url, category, created_at")

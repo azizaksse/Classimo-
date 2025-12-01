@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { SectionHeader } from "@/components/section-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,9 +16,9 @@ export const revalidate = 120;
 const marqueeTestimonials = Array.from({ length: 4 }, () => testimonials).flat();
 
 const heroStats = [
-  { label: "نقاط الخدمة", value: "12+ ولاية" },
-  { label: "موديلات جاهزة", value: "85" },
-  { label: "رضا الزبائن", value: "4.9/5" },
+  { label: "┘å┘é╪º╪╖ ╪º┘ä╪«╪»┘à╪⌐", value: "12+ ┘ê┘ä╪º┘è╪⌐" },
+  { label: "┘à┘ê╪»┘è┘ä╪º╪¬ ╪¼╪º┘ç╪▓╪⌐", value: "85" },
+  { label: "╪▒╪╢╪º ╪º┘ä╪▓╪¿╪º╪ª┘å", value: "4.9/5" },
 ];
 
 export default function Home() {
@@ -35,23 +35,23 @@ export default function Home() {
         <div className="absolute inset-0 rounded-[32px] bg-black/40" />
         <div className="relative space-y-7">
           <h1 className="liquid-glass inline-block rounded-[32px] px-6 py-4 text-4xl font-semibold leading-tight lg:text-5xl">
-            Classimo – كراء و بيع كوستيم الأفراح في الجزائر
+            Classimo ΓÇô ┘â╪▒╪º╪í ┘ê ╪¿┘è╪╣ ┘â┘ê╪│╪¬┘è┘à ╪º┘ä╪ú┘ü╪▒╪º╪¡ ┘ü┘è ╪º┘ä╪¼╪▓╪º╪ª╪▒
           </h1>
           <p className="text-lg">
-            إطلالات فاخرة بلمسة جزائرية، نوفّر كراء وبيع كوستيم الأفراح مع تجربة
-            قياس دقيقة، خدمة منزلية، وتفاصيل ذهبية تجعل سهرتك أكثر تميزاً.
+            ╪Ñ╪╖┘ä╪º┘ä╪º╪¬ ┘ü╪º╪«╪▒╪⌐ ╪¿┘ä┘à╪│╪⌐ ╪¼╪▓╪º╪ª╪▒┘è╪⌐╪î ┘å┘ê┘ü┘æ╪▒ ┘â╪▒╪º╪í ┘ê╪¿┘è╪╣ ┘â┘ê╪│╪¬┘è┘à ╪º┘ä╪ú┘ü╪▒╪º╪¡ ┘à╪╣ ╪¬╪¼╪▒╪¿╪⌐
+            ┘é┘è╪º╪│ ╪»┘é┘è┘é╪⌐╪î ╪«╪»┘à╪⌐ ┘à┘å╪▓┘ä┘è╪⌐╪î ┘ê╪¬┘ü╪º╪╡┘è┘ä ╪░┘ç╪¿┘è╪⌐ ╪¬╪¼╪╣┘ä ╪│┘ç╪▒╪¬┘â ╪ú┘â╪½╪▒ ╪¬┘à┘è╪▓╪º┘ï.
           </p>
           <div className="flex flex-wrap gap-4">
             <Button size="lg" className="px-8">
-              اكتشف خدمة الكراء
+              ╪º┘â╪¬╪┤┘ü ╪«╪»┘à╪⌐ ╪º┘ä┘â╪▒╪º╪í
             </Button>
             <Button variant="outline" size="lg" className="px-8">
-              تصفح متجر البيع
+              ╪¬╪╡┘ü╪¡ ┘à╪¬╪¼╪▒ ╪º┘ä╪¿┘è╪╣
             </Button>
           </div>
           <p className="text-sm">
-            خدمة خاصة للعرسان والضيوف: ضبط المقاسات، صيانة قبل وبعد الحدث،
-            وتوصيل عبر أغلب الولايات.
+            ╪«╪»┘à╪⌐ ╪«╪º╪╡╪⌐ ┘ä┘ä╪╣╪▒╪│╪º┘å ┘ê╪º┘ä╪╢┘è┘ê┘ü: ╪╢╪¿╪╖ ╪º┘ä┘à┘é╪º╪│╪º╪¬╪î ╪╡┘è╪º┘å╪⌐ ┘é╪¿┘ä ┘ê╪¿╪╣╪» ╪º┘ä╪¡╪»╪½╪î
+            ┘ê╪¬┘ê╪╡┘è┘ä ╪╣╪¿╪▒ ╪ú╪║┘ä╪¿ ╪º┘ä┘ê┘ä╪º┘è╪º╪¬.
           </p>
           <div className="grid gap-4 md:grid-cols-3">
             {heroStats.map((stat) => (
@@ -91,8 +91,8 @@ export default function Home() {
       <section className="space-y-8 lg:space-y-10">
         <SectionHeader
           eyebrow="Services"
-          title="حلول Classimo للكراء والبيع"
-          description="مسار لخدمة العرسان وضيوفهم: اختيار الموديل، تجربة خاصة، تعديل فوري، وخدمة ما بعد التسليم."
+          title="╪¡┘ä┘ê┘ä Classimo ┘ä┘ä┘â╪▒╪º╪í ┘ê╪º┘ä╪¿┘è╪╣"
+          description="┘à╪│╪º╪▒ ┘ä╪«╪»┘à╪⌐ ╪º┘ä╪╣╪▒╪│╪º┘å ┘ê╪╢┘è┘ê┘ü┘ç┘à: ╪º╪«╪¬┘è╪º╪▒ ╪º┘ä┘à┘ê╪»┘è┘ä╪î ╪¬╪¼╪▒╪¿╪⌐ ╪«╪º╪╡╪⌐╪î ╪¬╪╣╪»┘è┘ä ┘ü┘ê╪▒┘è╪î ┘ê╪«╪»┘à╪⌐ ┘à╪º ╪¿╪╣╪» ╪º┘ä╪¬╪│┘ä┘è┘à."
         />
         <div className="grid gap-5 md:grid-cols-3">
           {servicePillars.map((pillar) => (
@@ -112,7 +112,7 @@ export default function Home() {
       <section className="space-y-8 lg:space-y-10">
         <SectionHeader
           eyebrow="Collections"
-          title="تشكيلات ذهبية بلمسة سينمائية"
+          title="╪¬╪┤┘â┘è┘ä╪º╪¬ ╪░┘ç╪¿┘è╪⌐ ╪¿┘ä┘à╪│╪⌐ ╪│┘è┘å┘à╪º╪ª┘è╪⌐"
           align="center"
         />
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
@@ -136,7 +136,7 @@ export default function Home() {
                 variant="ghost"
                 className="mt-auto justify-start px-0 text-[#f5e6c8]"
               >
-                اكتشف التفاصيل
+                ╪º┘â╪¬╪┤┘ü ╪º┘ä╪¬┘ü╪º╪╡┘è┘ä
               </Button>
             </div>
           ))}
@@ -146,8 +146,8 @@ export default function Home() {
       <section className="space-y-10 lg:space-y-12">
         <SectionHeader
           eyebrow="Process"
-          title="رحلة أنيقة بأربع خطوات"
-          description="من أول اتصال إلى لحظة التسليم، كل خطوة محاطة بعناية، إدارتها رقمية لكن بروح حرفية."
+          title="╪▒╪¡┘ä╪⌐ ╪ú┘å┘è┘é╪⌐ ╪¿╪ú╪▒╪¿╪╣ ╪«╪╖┘ê╪º╪¬"
+          description="┘à┘å ╪ú┘ê┘ä ╪º╪¬╪╡╪º┘ä ╪Ñ┘ä┘ë ┘ä╪¡╪╕╪⌐ ╪º┘ä╪¬╪│┘ä┘è┘à╪î ┘â┘ä ╪«╪╖┘ê╪⌐ ┘à╪¡╪º╪╖╪⌐ ╪¿╪╣┘å╪º┘è╪⌐╪î ╪Ñ╪»╪º╪▒╪¬┘ç╪º ╪▒┘é┘à┘è╪⌐ ┘ä┘â┘å ╪¿╪▒┘ê╪¡ ╪¡╪▒┘ü┘è╪⌐."
           align="center"
         />
         <div className="glass-panel glow-border grid gap-4 rounded-[32px] p-6 md:grid-cols-4">
@@ -205,11 +205,11 @@ export default function Home() {
               className="liquid-glass inline-flex items-center justify-center rounded-[24px] px-6 py-3 text-3xl font-semibold text-white"
               lang="ar"
             >
-              آراء نقاط الخدمة لدينا Classimo
+              ???? ???? ????? ????? Classimo
             </h2>
           </div>
           <p className="text-base text-white/80">
-            هذي شهادات حقيقية من الشباب عن كراء و بيع كوستيم الأفراح مع Classimo.
+            ┘ç╪º╪░┘è ╪┤┘ç╪º╪»╪º╪¬ ╪¡┘é┘è┘é┘è╪⌐ ┘à┘å ╪º┘ä╪┤╪¿╪º╪¿ ╪╣┘å ┘â╪▒╪º╪í ┘ê ╪¿┘è╪╣ ┘â┘ê╪│╪¬┘è┘à ╪º┘ä╪ú┘ü╪▒╪º╪¡ ┘à╪╣ Classimo.
           </p>
         </div>
         <div className="relative rounded-[36px] border border-white/10 bg-gradient-to-br from-black/80 via-[#0b0a0d]/80 to-black/85 p-6 shadow-2xl shadow-black/50">
@@ -240,7 +240,7 @@ export default function Home() {
                     <p className="text-xs text-white/70">{testimonial.event}</p>
                     <div className="mt-2 flex items-center gap-1 text-[#fbbf24] text-base">
                       {Array.from({ length: 5 }).map((_, starIdx) => (
-                        <span key={starIdx}>★</span>
+                        <span key={starIdx}>Γÿà</span>
                       ))}
                     </div>
                   </div>
@@ -258,21 +258,20 @@ export default function Home() {
             Final Call
           </p>
           <h2 className="text-3xl font-semibold">
-            جاهز لسهرة فاخرة باللون الذهبي الداكن؟
+            ╪¼╪º┘ç╪▓ ┘ä╪│┘ç╪▒╪⌐ ┘ü╪º╪«╪▒╪⌐ ╪¿╪º┘ä┘ä┘ê┘å ╪º┘ä╪░┘ç╪¿┘è ╪º┘ä╪»╪º┘â┘å╪ƒ
           </h2>
           <p className="mx-auto max-w-2xl text-base">
-            احجز بدلتك أو اطلب تجربة منزلية. فريق Classimo يرافقك في كل ولاية،
-            مع متابعة رقمية فورية وضمان جودة في كل تفصيلة.
+            ╪º╪¡╪¼╪▓ ╪¿╪»┘ä╪¬┘â ╪ú┘ê ╪º╪╖┘ä╪¿ ╪¬╪¼╪▒╪¿╪⌐ ┘à┘å╪▓┘ä┘è╪⌐. ┘ü╪▒┘è┘é Classimo ┘è╪▒╪º┘ü┘é┘â ┘ü┘è ┘â┘ä ┘ê┘ä╪º┘è╪⌐╪î
+            ┘à╪╣ ┘à╪¬╪º╪¿╪╣╪⌐ ╪▒┘é┘à┘è╪⌐ ┘ü┘ê╪▒┘è╪⌐ ┘ê╪╢┘à╪º┘å ╪¼┘ê╪»╪⌐ ┘ü┘è ┘â┘ä ╪¬┘ü╪╡┘è┘ä╪⌐.
           </p>
           <Button size="lg" className="px-10">
-            احجز بدلتك الآن
+            ╪º╪¡╪¼╪▓ ╪¿╪»┘ä╪¬┘â ╪º┘ä╪ó┘å
           </Button>
         </div>
       </section>
     </div>
   );
 }
-
 
 
 

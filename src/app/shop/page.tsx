@@ -209,6 +209,15 @@ export default function ShopPage() {
             <div className="text-xs uppercase tracking-[0.35em]">
               {product.tag || "متاح"}
             </div>
+            {product.image_url ? (
+              <div className="mb-4 mt-4 aspect-square w-full overflow-hidden rounded-2xl bg-black/20">
+                <img
+                  src={product.image_url}
+                  alt={product.name}
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+            ) : null}
             <h3 className="mt-4 text-2xl font-semibold">{product.name}</h3>
             <p className="mt-2 text-sm">{product.description}</p>
             <p className="mt-auto text-xl font-semibold text-[#d4af37]">

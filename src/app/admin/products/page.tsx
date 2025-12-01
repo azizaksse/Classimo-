@@ -11,13 +11,7 @@ type Product = {
   category?: string | null;
 };
 
-const CATEGORY_OPTIONS = [
-  "بدلة",
-  "إكسسوار",
-  "أحذية",
-  "عطور",
-  "أخرى",
-];
+
 
 const isMissingCategoryColumn = (error?: { code?: string; message?: string } | null) =>
   !!error &&
@@ -25,16 +19,31 @@ const isMissingCategoryColumn = (error?: { code?: string; message?: string } | n
     error.message?.toLowerCase().includes("category") ||
     error.message?.toLowerCase().includes('column "category"'));
 
+async function getCategories() {
+  const supabaseAdmin = getSupabaseAdmin();
+  if (!supabaseAdmin) return [];
+
+  const { data } = await supabaseAdmin
+    .from("categories")
+    .select("name")
+    .order("name", { ascending: true });
+
+  return (data?.map(c => c.name) as string[]) || [];
+}
+
 async function getProducts(): Promise<{
   data: Product[];
+  categories: string[];
   error?: string;
   warning?: string;
 }> {
   const supabaseAdmin = getSupabaseAdmin();
+  const categories = await getCategories();
 
   if (!supabaseAdmin) {
     return {
       data: [],
+      categories: [],
       warning: "Supabase admin environment variables are not set. Add products after configuring env vars.",
     };
   }
@@ -51,7 +60,7 @@ async function getProducts(): Promise<{
       .order("created_at", { ascending: false });
 
     if (fallbackError) {
-      return { data: [], error: fallbackError.message };
+      return { data: [], categories, error: fallbackError.message };
     }
 
     return {
@@ -60,16 +69,17 @@ async function getProducts(): Promise<{
           ...item,
           category: null,
         })) ?? [],
+      categories,
       warning:
         "Products loaded without categories because the 'category' column is missing in Supabase. Add it to enable category selection.",
     };
   }
 
   if (error) {
-    return { data: [], error: error.message };
+    return { data: [], categories, error: error.message };
   }
 
-  return { data: (data as Product[]) ?? [] };
+  return { data: (data as Product[]) ?? [], categories };
 }
 
 export async function createProduct(formData: FormData) {
@@ -242,7 +252,7 @@ export async function updateProduct(formData: FormData) {
 }
 
 export default async function ProductsPage() {
-  const { data: products, error, warning } = await getProducts();
+  const { data: products, categories, error, warning } = await getProducts();
 
   return (
     <div className="min-h-screen bg-slate-50 px-6 py-10 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -287,13 +297,16 @@ export default async function ProductsPage() {
               <select
                 name="category"
                 className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm shadow-inner outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-800 dark:bg-slate-900 dark:focus:border-blue-400 dark:focus:ring-blue-900/60"
-                defaultValue={CATEGORY_OPTIONS[0]}
               >
-                {CATEGORY_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
+                {categories.length > 0 ? (
+                  categories.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">No categories found</option>
+                )}
               </select>
             </div>
             <div className="space-y-2">
@@ -354,15 +367,15 @@ export default async function ProductsPage() {
             <table className="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-800">
               <thead className="bg-slate-100/80 text-left text-xs uppercase tracking-wide text-slate-600 dark:bg-slate-800/60 dark:text-slate-300">
                 <tr>
-              <th className="px-4 py-3">Image</th>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Description</th>
-              <th className="px-4 py-3">Category</th>
-              <th className="px-4 py-3">Price</th>
-              <th className="px-4 py-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                  <th className="px-4 py-3">Image</th>
+                  <th className="px-4 py-3">Name</th>
+                  <th className="px-4 py-3">Description</th>
+                  <th className="px-4 py-3">Category</th>
+                  <th className="px-4 py-3">Price</th>
+                  <th className="px-4 py-3">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
                 {products.map((product, index) => (
                   <tr
                     key={product.id}
@@ -455,10 +468,10 @@ export default async function ProductsPage() {
                               </label>
                               <select
                                 name="category"
-                                defaultValue={product.category ?? CATEGORY_OPTIONS[0]}
+                                defaultValue={product.category ?? ""}
                                 className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-inner outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-800 dark:bg-slate-900 dark:focus:border-blue-400 dark:focus:ring-blue-900/60"
                               >
-                                {CATEGORY_OPTIONS.map((option) => (
+                                {categories.map((option) => (
                                   <option key={option} value={option}>
                                     {option}
                                   </option>
