@@ -23,7 +23,7 @@ export const SectionHeader = ({
       transition={{ duration: 0.6 }}
       className={cn(
         "mx-auto max-w-3xl space-y-3",
-        align === "center" ? "text-center" : "text-left",
+        align === "center" ? "text-center" : "text-start",
       )}
       lang={lang}
     >

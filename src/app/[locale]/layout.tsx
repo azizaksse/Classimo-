@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Cairo, Playfair_Display } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { RootLayoutClient } from "@/components/layout/root-layout";
 
 const displayFont = Playfair_Display({

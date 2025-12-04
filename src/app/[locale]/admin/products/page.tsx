@@ -6,7 +6,7 @@ type Product = {
   name: string;
   description: string | null;
   price: number;
-  image_url: string | null;
+  images: string[] | null;
   created_at: string;
   category?: string | null;
 };
@@ -50,13 +50,13 @@ async function getProducts(): Promise<{
 
   const { data, error } = await supabaseAdmin
     .from("products")
-    .select("id, name, description, price, image_url, created_at, category")
+    .select("id, name, description, price, images, created_at, category")
     .order("created_at", { ascending: false });
 
   if (isMissingCategoryColumn(error)) {
     const { data: fallbackData, error: fallbackError } = await supabaseAdmin
       .from("products")
-      .select("id, name, description, price, image_url, created_at")
+      .select("id, name, description, price, images, created_at")
       .order("created_at", { ascending: false });
 
     if (fallbackError) {
@@ -103,7 +103,7 @@ export async function createProduct(formData: FormData) {
     throw new Error("Missing Supabase environment variables for admin client");
   }
 
-  let imageUrl: string | null = null;
+  let imageUrls: string[] = [];
 
   if (file && typeof file !== "string" && file.size > 0) {
     const filePath = `products/${Date.now()}-${file.name}`;
@@ -119,14 +119,14 @@ export async function createProduct(formData: FormData) {
       data: { publicUrl },
     } = supabaseAdmin.storage.from("product-images").getPublicUrl(filePath);
 
-    imageUrl = publicUrl;
+    imageUrls = [publicUrl];
   }
 
   const insertPayload = {
     name,
     description,
     price,
-    image_url: imageUrl,
+    images: imageUrls,
     ...(category ? { category } : {}),
   };
 
@@ -139,7 +139,7 @@ export async function createProduct(formData: FormData) {
         name,
         description,
         price,
-        image_url: imageUrl,
+        images: imageUrls,
       });
 
     if (fallbackInsertError) {
@@ -198,7 +198,7 @@ export async function updateProduct(formData: FormData) {
     throw new Error("Missing Supabase environment variables for admin client");
   }
 
-  let updates: Partial<Product> & { image_url?: string | null } = {
+  let updates: Partial<Product> & { images?: string[] | null } = {
     name,
     description,
     price,
@@ -219,7 +219,7 @@ export async function updateProduct(formData: FormData) {
       data: { publicUrl },
     } = supabaseAdmin.storage.from("product-images").getPublicUrl(filePath);
 
-    updates = { ...updates, image_url: publicUrl };
+    updates = { ...updates, images: [publicUrl] };
   }
 
   const { error } = await supabaseAdmin
@@ -382,9 +382,9 @@ export default async function ProductsPage() {
                     className={index % 2 === 0 ? "bg-white dark:bg-slate-900" : "bg-slate-50 dark:bg-slate-950/40"}
                   >
                     <td className="px-4 py-3">
-                      {product.image_url ? (
+                      {product.images?.[0] ? (
                         <img
-                          src={product.image_url}
+                          src={product.images[0]}
                           alt={product.name}
                           className="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200/80 dark:ring-slate-800"
                         />

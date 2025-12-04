@@ -154,7 +154,7 @@ export default function Home() {
           {howItWorks.map((step, idx) => (
             <div
               key={step.title}
-              className="space-y-4 text-center md:text-right"
+              className="space-y-4 text-center md:text-start"
             >
               <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#d4af37]/50 bg-white/5 text-lg font-semibold text-[#d4af37] md:mx-0">
                 {idx + 1}
@@ -167,9 +167,9 @@ export default function Home() {
       </section>
 
       <section className="relative overflow-hidden rounded-[40px] border border-white/10 bg-gradient-to-br from-black via-[#0f0a05] to-[#050505]">
-        <div className="pointer-events-none absolute -left-10 -top-10 h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle_at_30%_30%,#d4af37,rgba(255,179,71,0.8),rgba(255,255,255,0.15))] opacity-20 blur-3xl" />
-        <div className="pointer-events-none absolute -right-16 top-24 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,179,71,0.8),#d4af37,rgba(255,255,255,0.18))] opacity-25 blur-3xl" />
-        <div className="pointer-events-none absolute -left-12 bottom-0 h-[240px] w-[240px] rounded-full bg-[radial-gradient(circle_at_40%_50%,rgba(255,255,255,0.18),rgba(212,175,55,0.9),rgba(15,10,5,0.9))] opacity-15 blur-3xl" />
+        <div className="pointer-events-none absolute -start-10 -top-10 h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle_at_30%_30%,#d4af37,rgba(255,179,71,0.8),rgba(255,255,255,0.15))] opacity-20 blur-3xl" />
+        <div className="pointer-events-none absolute -end-16 top-24 h-[220px] w-[220px] rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,179,71,0.8),#d4af37,rgba(255,255,255,0.18))] opacity-25 blur-3xl" />
+        <div className="pointer-events-none absolute -start-12 bottom-0 h-[240px] w-[240px] rounded-full bg-[radial-gradient(circle_at_40%_50%,rgba(255,255,255,0.18),rgba(212,175,55,0.9),rgba(15,10,5,0.9))] opacity-15 blur-3xl" />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-soft-light"
           style={{
@@ -202,7 +202,7 @@ export default function Home() {
           </p>
           <div className="inline-block">
             <h2
-              className="liquid-glass inline-flex items-center justify-center rounded-[24px] px-6 py-3 text-3xl font-semibold text-white"
+              className="liquid-glass inline-flex items-center justify-center rounded-[24px] px-6 py-3 text-3xl font-semibold text-white font-sans"
               lang="ar"
             >
               آراء نقاط الخدمة لدينا Classimo
@@ -213,8 +213,8 @@ export default function Home() {
           </p>
         </div>
         <div className="relative rounded-[36px] border border-white/10 bg-gradient-to-br from-black/80 via-[#0b0a0d]/80 to-black/85 p-6 shadow-2xl shadow-black/50">
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#050509] via-[#050509]/80 to-transparent blur-xl opacity-80" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-[#050509] via-[#050509]/80 to-transparent blur-xl opacity-80" />
+          <div className="pointer-events-none absolute inset-y-0 start-0 w-28 bg-gradient-to-r from-[#050509] via-[#050509]/80 to-transparent blur-xl opacity-80" />
+          <div className="pointer-events-none absolute inset-y-0 end-0 w-28 bg-gradient-to-l from-[#050509] via-[#050509]/80 to-transparent blur-xl opacity-80" />
           <div
             className="group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/5 px-4 py-6 backdrop-blur-xl shadow-inner shadow-black/40"
             style={{
@@ -228,7 +228,7 @@ export default function Home() {
               {marqueeTestimonials.map((testimonial, idx) => (
                 <div
                   key={`${testimonial.name}-${idx}`}
-                  className="liquid-glass min-w-[280px] max-w-[340px] rounded-[24px] border border-white/10 px-6 py-5 text-left shadow-xl shadow-black/30 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-[#d4af37]/60 hover:shadow-[0_10px_40px_-18px_rgba(212,175,55,0.8)]"
+                  className="liquid-glass min-w-[280px] max-w-[340px] rounded-[24px] border border-white/10 px-6 py-5 text-start shadow-xl shadow-black/30 backdrop-blur-lg transition duration-300 hover:-translate-y-1 hover:border-[#d4af37]/60 hover:shadow-[0_10px_40px_-18px_rgba(212,175,55,0.8)]"
                 >
                   <p className="text-sm leading-relaxed text-white/90">
                     &ldquo;{testimonial.quote}&rdquo;
@@ -272,10 +272,6 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
 
 
 

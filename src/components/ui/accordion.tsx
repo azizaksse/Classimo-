@@ -30,7 +30,7 @@ export const Accordion: React.FC<AccordionProps> = ({
             {" "}
             <button
               type="button"
-              className="flex w-full items-center justify-between text-left text-base font-semibold"
+              className="flex w-full items-center justify-between text-start text-base font-semibold"
               onClick={() => setOpenValue(isOpen ? "" : item.value)}
             >
               {" "}
