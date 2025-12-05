@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
-import { Link, usePathname } from "@/lib/navigation";
+import { Link, usePathname } from "@/i18n/routing";
 import { navigationLinks } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
