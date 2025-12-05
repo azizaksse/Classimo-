@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 // import { Cairo, Playfair_Display } from "next/font/google";
 import "../globals.css";
 import { RootLayoutClient } from "@/components/layout/root-layout";
@@ -30,18 +32,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: { locale: string };
 }>) {
+  const messages = await getMessages();
+  const locale = params.locale;
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning>
       <body
         className={`antialiased text-white`}
         suppressHydrationWarning
       >
-        <RootLayoutClient>{children}</RootLayoutClient>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <RootLayoutClient>{children}</RootLayoutClient>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
