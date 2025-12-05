@@ -20,5 +20,8 @@ export async function getAdminStats() {
         .select("id", { count: "exact", head: true }),
     ]);
 
-  return { pendingOrders, totalProducts };
+  return {
+    pendingOrders: pendingOrders ?? 0,
+    totalProducts: totalProducts ?? 0,
+  };
 }

@@ -223,7 +223,11 @@ export default function ProductForm() {
                                             <select
                                                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                                                 onChange={(e) => handleSpecChange(filter.key, e.target.value)}
-                                                value={specs[filter.key] || ''}
+                                                value={
+                                                    specs[filter.key] === undefined
+                                                        ? ''
+                                                        : String(specs[filter.key])
+                                                }
                                             >
                                                 <option value="">Select {filter.label}</option>
                                                 {filter.options.map((opt) => (
@@ -236,7 +240,11 @@ export default function ProductForm() {
                                             <Input
                                                 type={filter.type === 'number' ? 'number' : 'text'}
                                                 onChange={(e) => handleSpecChange(filter.key, e.target.value)}
-                                                value={specs[filter.key] || ''}
+                                                value={
+                                                    specs[filter.key] === undefined
+                                                        ? ''
+                                                        : String(specs[filter.key])
+                                                }
                                                 placeholder={`Enter ${filter.label}`}
                                             />
                                         )}
