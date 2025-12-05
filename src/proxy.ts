@@ -9,7 +9,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: "fr",
 });
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {
