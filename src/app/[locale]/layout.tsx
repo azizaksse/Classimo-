@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import { Cairo, Playfair_Display } from "next/font/google";
+// import { Cairo, Playfair_Display } from "next/font/google";
 import "../globals.css";
 import { RootLayoutClient } from "@/components/layout/root-layout";
 
-const displayFont = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-classimo-english",
-  display: "swap",
-});
+// const displayFont = Playfair_Display({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-classimo-english",
+//   display: "swap",
+// });
 
-const arabicFont = Cairo({
-  subsets: ["arabic"],
-  weight: ["400", "600", "700"],
-  variable: "--font-classimo-arabic",
-  display: "swap",
-});
+// const arabicFont = Cairo({
+//   subsets: ["arabic"],
+//   weight: ["400", "600", "700"],
+//   variable: "--font-classimo-arabic",
+//   display: "swap",
+// });
 
 export const metadata: Metadata = {
   title: "Classimo – كراء و بيع كوستيم الأفراح",
@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body
-        className={`${displayFont.variable} ${arabicFont.variable} antialiased text-white`}
+        className={`antialiased text-white`}
         suppressHydrationWarning
       >
         <RootLayoutClient>{children}</RootLayoutClient>

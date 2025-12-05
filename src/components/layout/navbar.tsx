@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
+import { Link, usePathname } from "@/lib/navigation";
 import { navigationLinks } from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,6 +14,13 @@ export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const locale = useLocale();
+
+  const localizedHref = (href: string) => {
+    const cleaned = href.startsWith("/") ? href : `/${href}`;
+    if (cleaned === "/") return `/${locale}`;
+    return `/${locale}${cleaned}`;
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 10);
@@ -34,7 +41,7 @@ export const Navbar = () => {
             "border-[#d4af37]/40 bg-black/70 shadow-[0_10px_60px_rgba(0,0,0,0.45)]",
         )}
       >
-        <Link href="/" className="group flex items-center gap-3">
+        <Link href={localizedHref("/")} className="group flex items-center gap-3">
           <motion.div
             className="relative h-12 w-12 overflow-hidden rounded-full border border-white/40 bg-white/10 p-1 shadow-inner shadow-[#d4af37]/40 transition-all duration-300"
             whileHover={{ y: -4, scale: 1.08 }}
@@ -54,20 +61,23 @@ export const Navbar = () => {
           </div>
         </Link>
         <div className="hidden items-center gap-6 text-sm uppercase tracking-[0.3em] lg:flex">
-          {navigationLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "transition-colors",
-                pathname === link.href
-                  ? "text-[#d4af37]"
-                  : "text-white hover:text-[#d4af37]",
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navigationLinks.map((link) => {
+            const href = localizedHref(link.href);
+            const isActive = pathname === href || pathname.startsWith(`${href}/`);
+
+            return (
+              <Link
+                key={link.href}
+                href={href}
+                className={cn(
+                  "transition-colors",
+                  isActive ? "text-[#d4af37]" : "text-white hover:text-[#d4af37]",
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
         <div className="hidden lg:block">
           <Button className="px-8">احجز بدلتك</Button>
@@ -112,21 +122,27 @@ export const Navbar = () => {
                 </button>
               </div>
               <div className="flex flex-col gap-4">
-                {navigationLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "rounded-2xl border border-white/10 px-4 py-3 text-sm font-semibold",
-                      pathname === link.href
-                        ? "border-[#d4af37] text-[#d4af37]"
-                        : "text-white",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {navigationLinks.map((link) => {
+                  const href = localizedHref(link.href);
+                  const isActive =
+                    pathname === href || pathname.startsWith(`${href}/`);
+
+                  return (
+                    <Link
+                      key={link.href}
+                      href={href}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "rounded-2xl border border-white/10 px-4 py-3 text-sm font-semibold",
+                        isActive
+                          ? "border-[#d4af37] text-[#d4af37]"
+                          : "text-white",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
                 <Button className="w-full" size="lg">
                   احجز بدلتك
                 </Button>

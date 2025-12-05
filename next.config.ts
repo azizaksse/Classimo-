@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
     // Explicitly pin the workspace root to avoid Turbopack choosing parent dirs.
     root: __dirname,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cfvkyycvoairmhuoowcb.supabase.co",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

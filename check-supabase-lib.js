@@ -14,7 +14,7 @@ async function checkLib() {
             if (line.startsWith('NEXT_PUBLIC_SUPABASE_URL=')) {
                 url = line.split('=')[1].trim().replace(/"/g, '');
             }
-            if (line.startsWith('SUPABASE_SERVICE_ROLE=')) {
+            if (line.startsWith('SUPABASE_SERVICE_ROLE_KEY=')) {
                 key = line.split('=')[1].trim().replace(/"/g, '');
             }
         });

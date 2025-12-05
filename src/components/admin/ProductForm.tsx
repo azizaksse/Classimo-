@@ -20,7 +20,7 @@ export default function ProductForm() {
     const [images, setImages] = useState(''); // Comma separated URLs for simplicity
     const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [specs, setSpecs] = useState<Record<string, any>>({});
+    const [specs, setSpecs] = useState<Record<string, string | number | boolean>>({});
 
     const supabase = getSupabaseClient();
 
@@ -40,7 +40,7 @@ export default function ProductForm() {
         setSpecs({}); // Reset specs when category changes
     };
 
-    const handleSpecChange = (key: string, value: any) => {
+    const handleSpecChange = (key: string, value: string | number | boolean) => {
         setSpecs((prev) => ({ ...prev, [key]: value }));
     };
 
@@ -171,7 +171,7 @@ export default function ProductForm() {
                                 }}
                             />
                             <p className="text-xs text-muted-foreground mt-1">
-                                We'll store the public URL in the images array automatically.
+                                We&apos;ll store the public URL in the images array automatically.
                             </p>
                             {uploadingImage ? (
                                 <p className="text-xs text-blue-600 mt-1">Uploading...</p>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -21,7 +22,7 @@ try {
         if (line.startsWith('NEXT_PUBLIC_SUPABASE_ANON_KEY=')) {
             key = line.split('=')[1].trim().replace(/"/g, '');
         }
-        if (line.startsWith('SUPABASE_SERVICE_ROLE=')) {
+        if (line.startsWith('SUPABASE_SERVICE_ROLE_KEY=')) {
             serviceKey = line.split('=')[1].trim().replace(/"/g, '');
         }
     });
@@ -37,9 +38,9 @@ try {
     else if (key.length < 20) console.log("❌ NEXT_PUBLIC_SUPABASE_ANON_KEY seems too short");
     else console.log("✅ NEXT_PUBLIC_SUPABASE_ANON_KEY format looks correct");
 
-    if (!serviceKey) console.log("❌ SUPABASE_SERVICE_ROLE is missing");
-    else if (serviceKey.length < 20) console.log("❌ SUPABASE_SERVICE_ROLE seems too short");
-    else console.log("✅ SUPABASE_SERVICE_ROLE format looks correct");
+    if (!serviceKey) console.log("❌ SUPABASE_SERVICE_ROLE_KEY is missing");
+    else if (serviceKey.length < 20) console.log("❌ SUPABASE_SERVICE_ROLE_KEY seems too short");
+    else console.log("✅ SUPABASE_SERVICE_ROLE_KEY format looks correct");
 
 } catch (e) {
     console.log("Error reading .env.local:", e.message);
